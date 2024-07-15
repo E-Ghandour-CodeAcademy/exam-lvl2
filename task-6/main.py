@@ -13,16 +13,43 @@
 # - Handle overflow and underflow appropriately with exceptions.
 
 class CircularQueue:
-    pass
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = 0
+        self.rear = 0
 
-# Examples:
-# cq = CircularQueue(3)
-# cq.enqueue(1)
-# cq.enqueue(2)
-# print(cq.peek())  # Expected: 1
-# print(cq.dequeue())  # Expected: 1
-# print(cq.is_empty())  # Expected: False
-# cq.enqueue(3)
-# cq.enqueue(4)
-# print(cq.dequeue())  # Expected: 2
-# print(cq.dequeue())  # Expected: 3
+    def enqueue(self, item):
+        if self.is_full():
+            raise Exception("Queue is full")
+        self.queue[self.rear] = item
+        self.rear = (self.rear + 1) % self.size
+
+    def dequeue(self):
+        if self.is_empty():
+            raise Exception("Queue is empty")
+        item = self.queue[self.front]
+        self.front = (self.front + 1) % self.size
+        return item
+
+    def peek(self):
+        if self.is_empty():
+            raise Exception("Queue is empty")
+        return self.queue[self.front]
+
+    def is_empty(self):
+        return self.front == self.rear
+
+    def is_full(self):
+        return (self.rear + 1) % self.size == self.front
+
+cq = CircularQueue(4)
+cq.enqueue(1)
+cq.enqueue(2)
+print(cq.peek())  # Expected: 1
+print(cq.dequeue())  # Expected: 1
+print(cq.is_empty())  # Expected: False
+cq.enqueue(3)
+cq.enqueue(4)
+print(cq.dequeue())  # Expected: 2
+print(cq.dequeue())  # Expected: 3
