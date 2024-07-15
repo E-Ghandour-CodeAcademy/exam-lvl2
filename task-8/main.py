@@ -9,9 +9,19 @@
 # - Ensure no method breaks the chaining by raising an exception or not returning self.
 
 class ChainableList(list):
-	pass
+    def append(self, value):
+        super().append(value)
+        return self
 
-# Desired Outcome:
-# cl = ChainableList()
-# cl.append(1).extend([2, 3]).pop().append(4)  # Chain multiple operations
-# print(cl)  # Expected: [1, 4]
+    def extend(self, iterable):
+        super().extend(iterable)
+        return self
+
+    def pop(self, index=-1):
+        super().pop(index)
+        return self
+
+# Example usage:
+cl = ChainableList()
+cl.append(1).extend([2, 3]).pop().append(4)
+print(cl)  # Expected: [1, 4]
