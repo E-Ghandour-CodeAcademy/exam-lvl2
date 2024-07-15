@@ -9,9 +9,26 @@
 # - Use a sophisticated method to check for primes to ensure efficiency as numbers grow large.
 
 class PrimeIterator:
-    pass
+    def __init__(self):
+        self.primes = [2]  # Initialize with the first prime number (2)
+        self.current = 2  # Initialize the current prime number
 
-# Example:
-# primes = PrimeIterator()
-# for _ in range(10):
-#     print(next(primes))  # Prints the first 10 prime numbers
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        while True:
+            self.current += 1
+            for prime in self.primes:
+                if self.current % prime == 0:
+                    break
+            else:
+                # If no divisor found, it's a prime number
+                self.primes.append(self.current)
+                return self.current
+
+# Example usage:
+primes = PrimeIterator()
+for _ in range(10):
+    print(next(primes))  # Prints the first 10 prime numbers
+
