@@ -7,18 +7,22 @@
 # Details:
 # - Use the `abc` module to make `Animal` an abstract base class.
 # - Subclasses like `Dog` and `Cat` should implement the `speak` method returning "Bark" and "Meow" respectively.
+from abc import ABC, abstractmethod
 
 class Animal():
-    pass
+    @abstractmethod
+    def speak(self) -> str:
+        pass
 
 class Dog(Animal):
-	pass
+    def speak(self) -> str:
+        return "Bark"
 
 class Cat(Animal):
-	pass
+    def speak(self) -> str:
+        return "Meow"
 
-# Desired Outcome:
-# dog = Dog()
-# print(dog.speak())  # Expected: Bark
-# cat = Cat()
-# print(cat.speak())  # Expected: Meow
+dog = Dog()
+print(dog.speak())  # Expected: Bark
+cat = Cat()
+print(cat.speak())  # Expected: Meow
